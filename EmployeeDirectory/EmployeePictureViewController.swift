@@ -52,6 +52,24 @@ private extension EmployeePictureViewController {
   func configureView() {
     guard let employee = employee else { return }
 
-    employeePictureImageView.image = UIImage(data: employee.picture)
+    employeePictureImageView.image = UIImage(data: (employee.picture?.pictureHiRes)! as Data)
   }
+
+  // MARK: - Memory warning observer from Ray wenderlich instruments tutorial
+  /*
+   init() {
+   NSNotificationCenter.defaultCenter().addObserverForName(
+   UIApplicationDidReceiveMemoryWarningNotification,
+   object: nil, queue: NSOperationQueue.mainQueue()) { notification in
+   self.images.removeAll(keepCapacity: false)
+   }
+   }
+   
+   deinit {
+   NSNotificationCenter.defaultCenter().removeObserver(self,
+   name: UIApplicationDidReceiveMemoryWarningNotification,
+   object: nil)
+   }
+ */
+  
 }

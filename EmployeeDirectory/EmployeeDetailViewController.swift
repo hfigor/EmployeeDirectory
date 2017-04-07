@@ -73,7 +73,7 @@ private extension EmployeeDetailViewController {
 
     title = employee.name
 
-    let image = UIImage(data: employee.picture)
+    let image = UIImage(data: employee.pictureThumbnail! as Data)
     headShotImageView.image = image
 
     nameLabel.text = employee.name
@@ -81,9 +81,9 @@ private extension EmployeeDetailViewController {
     emailLabel.text = employee.email
     phoneNumberLabel.text = employee.phone
 
-    startDateLabel.text = dateFormatter.string(from: employee.startDate)
+    startDateLabel.text = dateFormatter.string(from: employee.startDate! as Date)
 
-    vacationDaysLabel.text = String(employee.vacationDays.intValue)
+    vacationDaysLabel.text = String(describing: employee.vacationDays?.intValue)
 
     bioTextView.text = employee.about
 

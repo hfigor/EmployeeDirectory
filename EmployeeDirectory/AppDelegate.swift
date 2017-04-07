@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   lazy var coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
 
+  // MARK: - Import JSON control
   let amountToImport = 50
   let addSalesRecords = true
 
@@ -162,12 +163,18 @@ extension AppDelegate {
       employee.name = name
       employee.vacationDays = NSNumber(value: vacationDays)
       employee.department = department
-      employee.startDate = dateFormatter.date(from: startDate)!
+      employee.startDate = dateFormatter.date(from: startDate)! as NSDate
       employee.email = email
       employee.phone = phone
       employee.address = address
       employee.about = about
-      employee.picture = pictureData
+      employee.pictureThumbnail = imageDataScaledToHeight(pictureData, height: 120) as NSData
+      
+      let pictureObject = EmployeePicture(context: coreDataStack.mainContext)
+      
+      pictureObject.pictureHiRes = pictureData as NSData
+      
+      employee.picture = pictureObject
 
       if addSalesRecords {
         addSalesRecordsToEmployee(employee)
@@ -212,6 +219,6 @@ extension AppDelegate {
       sale.employee = employee
       sale.amount = NSNumber(value: 3000 + arc4random_uniform(20000))
     }
-    print("added \(employee.sales.count) sales")
+    print("added \(String(describing: employee.sales?.count)) sales")
   }
 }
